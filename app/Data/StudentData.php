@@ -4,11 +4,11 @@ namespace App\Data;
 
 use Spatie\LaravelData\Data;
 
-class EmployeeData extends Data
+class StudentData extends Data
 {
     public string $name;
 
     public string $email;
 
-    public string $position;
+    public string $subject_id;
 }

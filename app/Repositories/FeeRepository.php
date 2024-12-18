@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Data\FeeData;
 use App\Models\Fee;
 
 class FeeRepository
@@ -14,7 +15,7 @@ class FeeRepository
     public function storeFee(FeeData $feeData): Fee
     {
         $fees = new Fee;
-        $fees->fill($feeData);
+        $fees->fill($feeData->toArray());
         $fees->save();
 
         return $fees;
@@ -22,7 +23,7 @@ class FeeRepository
 
     public function updateFee(FeeData $feeData, Fee $fees)
     {
-        $fees->fill($feeData);
+        $fees->fill($feeData->toArray());
         $fees->update();
 
         return $fees;

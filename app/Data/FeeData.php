@@ -2,6 +2,8 @@
 
 namespace App\Data;
 
+use Spatie\LaravelData\Data;
+
 class FeeData extends Data
 {
     public string $amount;

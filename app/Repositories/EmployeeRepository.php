@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Data\EmployeeData;
 use App\Models\Employee;
 
 class EmployeeRepository
@@ -14,7 +15,7 @@ class EmployeeRepository
     public function storeEmployee(EmployeeData $employeesData): Employee
     {
         $employee = new Employee;
-        $employee->fill($employeesData);
+        $employee->fill($employeesData->toArray());
         $employee->save();
 
         return $employee;
@@ -22,7 +23,7 @@ class EmployeeRepository
 
     public function updateEmployee(EmployeeData $employeesData, Employee $employee)
     {
-        $employee->fill($employeesData);
+        $employee->fill($employeesData->toArray());
         $employee->update();
 
         return $employee;
