@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
+use App\Repositories\EmployeeRepository;
+use Illuminate\Support\Facades\Redirect;
 
 class EmployeeController extends Controller
 {
+    public function __construct(private EmployeeRepository $employeesRepository) {}
+
     public function index()
     {
-        $employees = Employee::all();
-        return view('employees.index', compact('employees'));
+        return view('employees.index', ['employees' => $this->employeesRepository->getAllEmployees()]);
     }
 
     public function create()
@@ -18,15 +21,22 @@ class EmployeeController extends Controller
         return view('employees.create');
     }
 
-    public function store(EmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request)
     {
-        Employee::create($request->validated());
-        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
+        $this->employeesRepository->storeEmployee($request->validated());
+
+        return Redirect::route('employees.index');
     }
 
-    public function destroy(Employee $employee)
+    public function update(UpdateEmployeeRequest $request, int $id)
     {
-        $employee->delete();
-        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
+        $this->employeesRepository->updateEmployee($request->validated(), $this->employeesRepository->getEmployeeById($id));
+
+        return Redirect::route('employees.index');
+    }
+
+    public function destroy(int $id)
+    {
+        $this->employeesRepository->deleteEmployee($this->employeesRepository->getEmployeeById($id));
     }
 }
