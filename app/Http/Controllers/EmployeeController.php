@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        return view('employees.index', ['employees' => $this->employeesRepository->getAllEmployees()]);
+        return view('employees.index');
     }
 
     public function create()
@@ -33,10 +33,5 @@ class EmployeeController extends Controller
         $this->employeesRepository->updateEmployee($request->validated(), $this->employeesRepository->getEmployeeById($id));
 
         return Redirect::route('employees.index');
-    }
-
-    public function destroy(int $id)
-    {
-        $this->employeesRepository->deleteEmployee($this->employeesRepository->getEmployeeById($id));
     }
 }

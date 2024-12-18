@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fee;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreFeeRequest;
+use App\Http\Requests\UpdateFeeRequest;
+use App\Repositories\FeeRepository;
+use Illuminate\Support\Facades\Redirect;
 
 class FeeController extends Controller
 {
+    public function __construct(private FeeRepository $feesRepository) {}
+
     public function index()
     {
-        $fees = Fee::all();
-        return view('fees.index', compact('fees'));
+        return view('fees.index');
     }
 
     public function create()
@@ -18,20 +21,17 @@ class FeeController extends Controller
         return view('fees.create');
     }
 
-    public function store(FeeRequest $request)
+    public function store(StoreFeeRequest $request)
     {
-        $request->validate([
-            'amount' => 'required|numeric',
-            'description' => 'required',
-        ]);
+        $this->feesRepository->storeFee($request->validated());
 
-        Fee::create($request->validate());
-        return redirect()->route('fees.index')->with('success', 'Fee created successfully.');
+        return Redirect::route('fees.index');
     }
 
-    public function destroy(Fee $fee)
+    public function update(UpdateFeeRequest $request, int $id)
     {
-        $fee->delete();
-        return redirect()->route('fees.index')->with('success', 'Fee deleted successfully.');
+        $this->feesRepository->updateFee($request->validated(), $this->feesRepository->getFeeById($id));
+
+        return Redirect::route('fees.index');
     }
 }
