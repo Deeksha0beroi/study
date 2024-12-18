@@ -7,10 +7,13 @@ use App\Data\SubjectData;
 use App\Manager\StudentManager;
 use App\Repositories\StudentRepository;
 use App\Repositories\SubjectRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class StudentManagerTest extends TestCase
 {
+    use RefreshDatabase;
+
     private StudentManager $studentManager;
 
     private StudentRepository $studentRepository;
@@ -21,38 +24,42 @@ class StudentManagerTest extends TestCase
     {
         parent::setUp();
 
-        // Instantiate real repositories
         $this->studentRepository = new StudentRepository;
 
         $this->subjectRepository = new SubjectRepository;
 
         $this->studentManager = new StudentManager(
             $this->studentRepository,
-
             $this->subjectRepository
         );
     }
 
     public function test_save_student_with_relations()
     {
-        // Prepare test data
         $studentData = new StudentData;
         $studentData->name = 'John Doe';
-        $studentData->email = 'john.doe@example.com';
-        $studentData->subject_id = 1;
+        $studentData->email = 'johndoe@gmail.com';
 
         $subjectData = new SubjectData;
-        $subjectData->id = $studentData->subject_id;
         $subjectData->name = 'Mathematics';
-
-        $this->subjectRepository->save($subjectData);
+        $subject = $this->subjectRepository->storeSubject($subjectData);
+        $studentData->subject_id = $subject->id;
 
         $student = $this->studentManager->saveStudentWithRelations($studentData);
 
-        $this->assertNotNull($student);
-        $this->assertEquals('John Doe', $student->name);
+        $this->assertEquals($studentData->name, $student->name);
+        $this->assertEquals($studentData->email, $student->email);
+        $this->assertEquals($studentData->subject_id, $student->subject_id);
 
-        // Verify that the relationship has been stored in student
-        $this->assertEquals(1, $student->subject->id);
+        $this->assertDatabaseHas('students', [
+            'name' => $studentData->name,
+            'email' => $studentData->email,
+            'subject_id' => $studentData->subject_id,
+        ]);
+
+        $this->assertDatabaseHas('subjects', [
+            'id' => $studentData->subject_id,
+        ]);
+
     }
 }

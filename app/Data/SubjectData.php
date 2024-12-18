@@ -6,5 +6,7 @@ use Spatie\LaravelData\Data;
 
 class SubjectData extends Data
 {
-    public string $name;
+    public int $id;
+
+    public string $name = '';
 }
