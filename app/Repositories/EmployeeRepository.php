@@ -11,18 +11,18 @@ class EmployeeRepository
         return Employee::with($relations)->findOrFail($id);
     }
 
-    public function storeEmployee(array $request)
+    public function storeEmployee(EmployeeData $employeesData): Employee
     {
         $employee = new Employee;
-        $employee->fill($request);
+        $employee->fill($employeesData);
         $employee->save();
 
         return $employee;
     }
 
-    public function updateEmployee(array $request, Employee $employee)
+    public function updateEmployee(EmployeeData $employeesData, Employee $employee)
     {
-        $employee->fill($request);
+        $employee->fill($employeesData);
         $employee->update();
 
         return $employee;

@@ -11,18 +11,18 @@ class FeeRepository
         return Fee::with($relations)->findOrFail($id);
     }
 
-    public function storeFee(array $request)
+    public function storeFee(FeeData $feeData): Fee
     {
         $fees = new Fee;
-        $fees->fill($request);
+        $fees->fill($feeData);
         $fees->save();
 
         return $fees;
     }
 
-    public function updateFee(array $request, Fee $fees)
+    public function updateFee(FeeData $feeData, Fee $fees)
     {
-        $fees->fill($request);
+        $fees->fill($feeData);
         $fees->update();
 
         return $fees;
