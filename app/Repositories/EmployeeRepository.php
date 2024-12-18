@@ -15,7 +15,7 @@ class EmployeeRepository
     public function storeEmployee(EmployeeData $employeesData): Employee
     {
         $employee = new Employee;
-        $employee->fill($employeesData->toArray());
+        $employee->fill($employeesData->except('id')->toArray());
         $employee->save();
 
         return $employee;
@@ -23,7 +23,7 @@ class EmployeeRepository
 
     public function updateEmployee(EmployeeData $employeesData, Employee $employee)
     {
-        $employee->fill($employeesData->toArray());
+        $employee->fill($employeesData->except('id')->toArray());
         $employee->update();
 
         return $employee;

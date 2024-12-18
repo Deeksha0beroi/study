@@ -15,7 +15,8 @@ class SubjectRepository
     public function storeSubject(SubjectData $subjectsData): Subject
     {
         $subject = new Subject;
-        $subject->fill($subjectsData->toArray());
+        $subject->fill($subjectsData->except('id')->toArray());
+        $subject->name = $subjectsData->name;
         $subject->save();
 
         return $subject;
@@ -23,7 +24,7 @@ class SubjectRepository
 
     public function updateSubject(SubjectData $subjectsData, Subject $subject)
     {
-        $subject->fill($subjectsData->toArray());
+        $subject->fill($subjectsData->except('id')->toArray());
         $subject->update();
 
         return $subject;

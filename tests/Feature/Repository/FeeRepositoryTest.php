@@ -6,7 +6,7 @@ use App\Models\Fee;
 use App\Repositories\FeeRepository;
 use Tests\TestCase;
 
-class EmployeeRepositoryTest extends TestCase
+class FeeRepositoryTest extends TestCase
 {
     /**
      * A basic feature test example.

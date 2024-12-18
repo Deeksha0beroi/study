@@ -15,7 +15,7 @@ class studentRepository
     public function storeStudent(StudentData $studentsData): Student
     {
         $student = new Student;
-        $student->fill($studentsData->toArray());
+        $student->fill($studentsData->except('id')->toArray());
         $student->save();
 
         return $student;
@@ -23,7 +23,7 @@ class studentRepository
 
     public function updateStudent(StudentData $studentsData, Student $student)
     {
-        $student->fill($studentsData->toArray());
+        $student->fill($studentsData->except('id')->toArray());
         $student->update();
 
         return $student;

@@ -29,17 +29,28 @@ class Student extends Model
         'updated_at',
     ];
 
+    protected $cast = [
+        'id' => 'integer',
+        'name' => 'string',
+        'email' => 'string',
+        'subject_id' => 'integer',
+    ];
+
     /*
-    Relationships
-    */
+     |--------------------------------------------------------------------------
+     | Relations
+     |--------------------------------------------------------------------------
+     */
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }
 
     /*
-    Factory
-    */
+     |--------------------------------------------------------------------------
+     | Factory
+     |--------------------------------------------------------------------------
+     */
     protected static function newFactory(): Factory
     {
         return StudentFactory::new();

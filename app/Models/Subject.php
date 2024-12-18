@@ -23,15 +23,26 @@ class Subject extends Model
         'updated_at',
     ];
 
+    protected $casts = [
+        'id' => 'integer',
+        'name' => 'string',
+    ];
+
     /*
-    Relationships
+    |--------------------------------------------------------------------------
+    | Relations
+    |--------------------------------------------------------------------------
     */
     public function students(): HasMany
     {
         return $this->hasMany(Student::class);
     }
 
-    /* Factory */
+    /*
+    |--------------------------------------------------------------------------
+    | Factory
+    |--------------------------------------------------------------------------
+    */
 
     protected static function newFactory(): Factory
     {

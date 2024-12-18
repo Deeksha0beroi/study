@@ -17,4 +17,10 @@ class Employee extends Model
         'position',
     ];
 
+    protected $cast = [
+        'id' => 'integer',
+        'name' => 'string',
+        'email' => 'string',
+        'position' => 'string',
+    ];
 }

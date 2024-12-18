@@ -15,4 +15,10 @@ class Fee extends Model
         'amount',
         'due_date',
     ];
+
+    protected $cast = [
+        'id' => 'integer',
+        'amount' => 'float',
+        'due_date' => 'date',
+    ];
 }
