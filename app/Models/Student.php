@@ -6,8 +6,6 @@ use Database\Factories\StudentFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -18,8 +16,6 @@ class Student extends Model
     protected $fillable = [
         'name',
         'email',
-        'subject_id',
-        'fee_id',
     ];
 
     protected $hidden = [
@@ -31,8 +27,6 @@ class Student extends Model
         'id' => 'integer',
         'name' => 'string',
         'email' => 'string',
-        'subject_id' => 'integer',
-        'fee_id' => 'integer',
     ];
 
     /*
@@ -40,14 +34,10 @@ class Student extends Model
      | Relations
      |--------------------------------------------------------------------------
      */
-    public function subject(): BelongsTo
-    {
-        return $this->belongsTo(Subject::class);
-    }
 
-    public function fees(): HasOne
+    public function subjects()
     {
-        return $this->hasOne(Fee::class);
+        return $this->morphMany(StudentSubject::class, 'subjectable');
     }
 
     /*

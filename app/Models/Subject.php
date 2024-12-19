@@ -6,7 +6,6 @@ use Database\Factories\SubjectFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Subject extends Model
 {
@@ -16,6 +15,7 @@ class Subject extends Model
 
     protected $fillable = [
         'name',
+        'marks',
     ];
 
     protected $hidden = [
@@ -26,6 +26,7 @@ class Subject extends Model
     protected $casts = [
         'id' => 'integer',
         'name' => 'string',
+        'marks' => 'string',
     ];
 
     /*
@@ -33,9 +34,9 @@ class Subject extends Model
     | Relations
     |--------------------------------------------------------------------------
     */
-    public function students(): HasMany
+    public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->morphMany(StudentSubject::class, 'subjectable');
     }
 
     /*

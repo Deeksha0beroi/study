@@ -5,21 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fee extends Model
+class StudentSubject extends Model
 {
     use HasFactory;
 
-    protected $table = 'fees';
+    protected $table = 'students_subjects';
 
     protected $fillable = [
-        'amount',
-        'due_date',
+        'student_id',
+        'subject_id',
     ];
 
-    protected $cast = [
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
+    protected $casts = [
         'id' => 'integer',
-        'amount' => 'float',
-        'due_date' => 'date',
+        'student_id' => 'integer',
+        'subject_id' => 'integer',
     ];
 
     /*
@@ -27,4 +32,8 @@ class Fee extends Model
     | Relations
     |--------------------------------------------------------------------------
     */
+    public function subjectable()
+    {
+        return $this->morphTo();
+    }
 }

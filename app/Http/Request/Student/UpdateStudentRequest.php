@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Subject;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateStudentRequest extends FormRequest
@@ -29,7 +28,6 @@ class UpdateStudentRequest extends FormRequest
 
             'email' => 'required|email|unique:employees,email',
 
-            'subject_id' => 'required|exists:'.(new Subject)->getTable().',id',
         ];
     }
 }
