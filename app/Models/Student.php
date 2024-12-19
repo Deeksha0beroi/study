@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
@@ -18,10 +19,7 @@ class Student extends Model
         'name',
         'email',
         'subject_id',
-    ];
-
-    protected $casts = [
-        'subject_id' => 'integer',
+        'fee_id',
     ];
 
     protected $hidden = [
@@ -34,6 +32,7 @@ class Student extends Model
         'name' => 'string',
         'email' => 'string',
         'subject_id' => 'integer',
+        'fee_id' => 'integer',
     ];
 
     /*
@@ -44,6 +43,11 @@ class Student extends Model
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
+    }
+
+    public function fees(): HasOne
+    {
+        return $this->hasOne(Fee::class);
     }
 
     /*
