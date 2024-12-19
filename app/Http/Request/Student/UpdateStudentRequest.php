@@ -28,6 +28,10 @@ class UpdateStudentRequest extends FormRequest
 
             'email' => 'required|email|unique:employees,email',
 
+            'subject_ids' => 'array',
+
+            'subject_ids.*' => 'integer|exists:subjects,id',
+
         ];
     }
 }

@@ -23,14 +23,16 @@ class SubjectController extends Controller
 
     public function store(StoreSubjectRequest $request)
     {
-        $this->subjectsRepository->storeSubject($request->validated());
+        $subject = $this->subjectsRepository->storeSubject($request->validated());
+        $this->subjectsRepository->attachStudents($subject, $request->input('student_ids', []));
 
         return Redirect::route('subjects.index');
     }
 
     public function update(UpdateSubjectRequest $request, int $id)
     {
-        $this->subjectsRepository->updateSubject($request->validated(), $this->subjectsRepository->getSubjectById($id));
+        $subject = $this->subjectsRepository->updateSubject($request->validated(), $this->subjectsRepository->getSubjectById($id));
+        $this->subjectsRepository->attachStudents($subject, $request->input('student_ids', []));
 
         return Redirect::route('subjects.index');
     }

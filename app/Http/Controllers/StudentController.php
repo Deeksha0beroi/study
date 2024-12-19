@@ -23,14 +23,16 @@ class StudentController extends Controller
 
     public function store(StoreStudentRequest $request)
     {
-        $this->studentsRepository->storeStudent($request->validated());
+        $student = $this->studentsRepository->storeStudent($request->validated());
+        $this->studentsRepository->attachSubjects($student, $request->input('subject_ids', []));
 
         return Redirect::route('students.index');
     }
 
     public function update(UpdateStudentRequest $request, int $id)
     {
-        $this->studentsRepository->updateStudent($request->validated(), $this->studentsRepository->getStudentById($id));
+        $student = $this->studentsRepository->updateStudent($request->validated(), $this->studentsRepository->getStudentById($id));
+        $this->studentsRepository->attachSubjects($student, $request->input('subject_ids', []));
 
         return Redirect::route('students.index');
     }

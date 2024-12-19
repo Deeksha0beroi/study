@@ -25,7 +25,12 @@ class StoreSubjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+
             'marks' => 'required|numeric',
+
+            'student_ids' => 'array',
+
+            'student_ids.*' => 'integer|exists:students,id',
         ];
     }
 }
