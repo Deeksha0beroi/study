@@ -13,6 +13,7 @@ class SubjectFactory extends Factory
     {
         return [
             'name' => $this->faker->unique()->word,
+            'marks' => $this->faker->numberBetween(0, 100),
         ];
     }
 }
