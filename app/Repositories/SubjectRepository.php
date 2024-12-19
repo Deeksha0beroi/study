@@ -34,4 +34,14 @@ class SubjectRepository
     {
         return $subject->delete();
     }
+
+    public function attachStudents(Subject $subject, array $studentIds)
+    {
+        $subject->students()->sync($studentIds);
+    }
+
+    public function detachStudents(Subject $subject, array $studentIds)
+    {
+        $subject->students()->detach($studentIds);
+    }
 }
