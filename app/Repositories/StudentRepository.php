@@ -33,9 +33,4 @@ class studentRepository
     {
         return $student->delete();
     }
-
-    public function attachSubjects(Student $student, array $subjectIds)
-    {
-        $student->subjects()->sync($subjectIds);
-    }
 }

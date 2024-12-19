@@ -36,7 +36,9 @@ class Subject extends Model
     */
     public function students()
     {
-        return $this->morphMany(StudentSubject::class, 'subjectable');
+        return $this->belongsToMany(Student::class, 'students_subjects')
+            ->withPivot('student_id', 'subject_id')
+            ->withTimestamps();
     }
 
     /*
